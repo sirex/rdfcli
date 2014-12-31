@@ -80,4 +80,5 @@ class Model:
         else:
             return URIRef(string)
 
-
+    def select(self, query):
+        return self.graph.query(query)

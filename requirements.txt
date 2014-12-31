@@ -6,3 +6,4 @@ pyparsing==1.5.7
 rdflib==4.0.1
 six==1.4.1
 wsgiref==0.1.2
+prettytable==0.7.2

@@ -86,3 +86,17 @@ class TestController(unittest.TestCase):
         self.controller.this()
         self.assertEqual(N.spiderman, self.controller.current)
 
+    def test_select(self):
+        self.controller.go(N.spiderman)
+        self.controller.model.graph.bind('ex', 'http://example.org/#')
+        cols, rows = self.controller.select('select ?s ?p ?o where { ?s ?p ?o . }')
+        self.assertEqual(cols, ['s', 'p', 'o'])
+        self.assertEqual(sorted(rows), [
+            ['ex:green_goblin', 'foaf:name', 'Green Goblin'],
+            ['ex:green_goblin', 'rdf:type', 'foaf:Person'],
+            ['ex:green_goblin', 'rel:enemyOf', 'ex:spiderman'],
+            ['ex:spiderman', 'foaf:name', 'Spiderman'],
+            ['ex:spiderman', 'foaf:name', 'Человек-паук'],
+            ['ex:spiderman', 'rdf:type', 'foaf:Person'],
+            ['ex:spiderman', 'rel:enemyOf', 'ex:green_goblin'],
+        ])

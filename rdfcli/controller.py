@@ -1,3 +1,5 @@
+import operator
+
 from history import History
 
 class Controller:
@@ -129,3 +131,17 @@ class Controller:
     def norm(self, ref):
         return self.model.norm(ref)
 
+    def select(self, query):
+        cols = None
+        rows = []
+        sortkey = operator.itemgetter(1)
+        for row in self.model.select(query):
+            values = []
+            if cols is None:
+                cols = [
+                    col for col, _ in sorted(row.labels.items(), key=sortkey)
+                ]
+            for col in cols:
+                values.append(self.norm(row[col]))
+            rows.append(values)
+        return cols, rows

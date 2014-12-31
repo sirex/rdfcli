@@ -1,4 +1,6 @@
+import pyparsing
 from cmd import Cmd
+from prettytable import PrettyTable
 
 HELP_MSG = '''
 Commands:
@@ -16,6 +18,7 @@ Commands:
   f           # Go forward in history
   b           # Go back in history
   hist        # Print history stack.
+  select      # SPARQL SELECT query, example: select distinct ?p where { ?s ?p ?o } order by ?p
   help        # Print this help.
   exit        # Exit.
 '''
@@ -147,6 +150,18 @@ class View(Cmd):
         types = self.controller.types()
         for type_ in types:
             print self.__norm(type_)
+
+    def do_select(self, params):
+        try:
+            cols, rows = self.controller.select('select %s' % params)
+        except pyparsing.ParseException as e:
+            print e
+        else:
+            table = PrettyTable(cols)
+            table.align = 'l'
+            for row in rows:
+                table.add_row(row)
+            print table
 
     def __norm(self, ref, trim=False):
         res = self.controller.norm(ref)
