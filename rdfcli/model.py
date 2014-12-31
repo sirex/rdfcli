@@ -59,7 +59,12 @@ class Model:
         return properties
 
     def norm(self, ref):
-        return self.graph.namespace_manager.normalizeUri(ref) if ref else None
+        if ref is None:
+            return None
+        elif isinstance(ref, URIRef):
+            return self.graph.namespace_manager.normalizeUri(ref)
+        else:
+            return unicode(ref)
 
     def to_uriref(self, string):
         """Expand QName to UriRef based on existing namespaces."""
