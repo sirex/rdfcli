@@ -12,18 +12,17 @@ from rdfcli.model import Model
 N = Namespace('http://example.org/#')
 REL = Namespace('http://www.perceive.net/schemas/relationship/')
 
+
+class FakeModel(Model):
+    def load(self, source, format=None):
+        self.graph.parse('test/fixture.rdf')
+
+
 class TestController(unittest.TestCase):
 
     def setUp(self):
         self.controller = Controller()
-
-        # stub Model.load to load only a local file
-        def load_stub(self, source, format=None):
-            self.graph.parse('test/fixture.rdf')
-
-        Model.load = load_stub
-        model = Model()
-        self.controller.set_model(model)
+        self.controller.set_model(FakeModel())
         self.controller.load('test/fixture.rdf')
 
     def test_initialization(self):
