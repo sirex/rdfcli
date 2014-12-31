@@ -3,9 +3,8 @@
 from __future__ import unicode_literals
 
 import unittest
-from rdflib import Graph
 from rdflib.namespace import Namespace, RDF, FOAF
-from rdflib.term import URIRef, Literal
+from rdflib.term import Literal
 
 from rdfcli.controller import Controller
 from rdfcli.model import Model
@@ -75,16 +74,16 @@ class TestController(unittest.TestCase):
     def test_forward(self):
         self.controller.go(N.spiderman)
         self.controller.back()
-        result = self.controller.forward()
+        self.controller.forward()
         self.assertEqual(N.spiderman, self.controller.current)
 
     def test_back(self):
         self.controller.go(N.spiderman)
-        result = self.controller.back()
+        self.controller.back()
         self.assertEqual(None, self.controller.current)
 
     def test_this(self):
         self.controller.go(N.spiderman)
-        result = self.controller.this()
+        self.controller.this()
         self.assertEqual(N.spiderman, self.controller.current)
 
