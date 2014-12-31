@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import unittest
 from rdflib import Graph
 from rdflib.namespace import Namespace, RDF, FOAF
@@ -38,10 +40,10 @@ class TestController(unittest.TestCase):
         result = self.controller.ls(None)
         self.assertIn(FOAF.Person, result[RDF.type])
         self.assertIn(Literal('Spiderman'), result[FOAF.name])
-        self.assertIn(Literal(u'Человек-паук', lang=u'ru'), result[FOAF.name])
+        self.assertIn(Literal('Человек-паук', lang='ru'), result[FOAF.name])
         result = self.controller.ls('foaf:name')
         self.assertIn(Literal('Spiderman'), result)
-        self.assertIn(Literal(u'Человек-паук', lang=u'ru'), result)
+        self.assertIn(Literal('Человек-паук', lang='ru'), result)
 
     def test_is(self):
         self.controller.go(N.spiderman)
