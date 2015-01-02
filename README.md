@@ -39,6 +39,7 @@ Commands:
   f           # Go forward in history
   b           # Go back in history
   hist        # Print history stack.
+  select      # SPARQL SELECT query, example: select distinct ?p where { ?s ?p ?o } order by ?p
   help        # Print this help.
   exit        # Exit.
 
